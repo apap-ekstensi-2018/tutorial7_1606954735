@@ -1,5 +1,6 @@
 package com.example.dao;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,10 @@ public class StudentDAOImpl implements StudentDAO {
 	
 	@Override
 	public List<StudentModel> selectAllStudents () {
-		List<StudentModel> students = restTemplate.getForObject(
+		StudentModel[] students = restTemplate.getForObject(
 				"http://localhost:8080/rest/student/viewall/",
-				null);
-		return students;
+				StudentModel[].class);
+		List<StudentModel> result = Arrays.asList(students);
+		return result;
 	}
 }
