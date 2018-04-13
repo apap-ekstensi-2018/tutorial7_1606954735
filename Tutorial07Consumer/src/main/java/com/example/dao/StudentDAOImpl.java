@@ -4,12 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.model.StudentModel;
 
+@Service
 public class StudentDAOImpl implements StudentDAO {
 	@Autowired
+	@Lazy
 	private RestTemplate restTemplate;
 	
 	@Override
@@ -27,5 +33,11 @@ public class StudentDAOImpl implements StudentDAO {
 				StudentModel[].class);
 		List<StudentModel> result = Arrays.asList(students);
 		return result;
+	}
+	
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		// Do any additional configuration here
+		return builder.build();
 	}
 }
